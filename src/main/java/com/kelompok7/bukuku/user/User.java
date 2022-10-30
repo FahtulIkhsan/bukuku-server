@@ -38,8 +38,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Alamat> alamat = new HashSet<>();
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<NomorTelepon> nomorTelepon;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Buku> buku;
+
+    public boolean isEnabled;
 }
