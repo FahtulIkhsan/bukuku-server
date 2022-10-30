@@ -1,5 +1,6 @@
 package com.kelompok7.bukuku.user.nomorTelepon;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kelompok7.bukuku.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 public class NomorTelepon {
     @Id
     private Long id;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
