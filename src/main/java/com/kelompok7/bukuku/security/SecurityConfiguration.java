@@ -6,6 +6,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -21,19 +22,17 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final RsaKeyProperties rsaKeys;
-
-    public SecurityConfiguration(RsaKeyProperties rsaKeys) {
-        this.rsaKeys = rsaKeys;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
+                        .antMatchers("/user/save").permitAll()
                         .antMatchers("/auth/register").permitAll()
                         .antMatchers("/auth/login").permitAll()
                         .anyRequest().authenticated()

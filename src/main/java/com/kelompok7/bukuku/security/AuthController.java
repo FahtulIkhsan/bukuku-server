@@ -4,7 +4,6 @@ import com.kelompok7.bukuku.user.User;
 import com.kelompok7.bukuku.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +22,11 @@ public class AuthController {
     private final TokenService tokenService;
     private final UserService userService;
 
-    @PostMapping(value = "/register")
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("user/save").toUriString());
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user) {
+        log.info("Line1");
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/auth/register").toUriString());
+        log.info("Line2");
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 

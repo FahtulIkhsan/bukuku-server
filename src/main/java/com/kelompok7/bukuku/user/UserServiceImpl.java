@@ -1,20 +1,32 @@
 package com.kelompok7.bukuku.user;
 
+import com.kelompok7.bukuku.user.role.ERole;
+import com.kelompok7.bukuku.user.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepo userRepo;
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,6 +45,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User saveUser(User user) {
         log.info("Saving new user {} to the database", user.getName());
+        user.setPassword(encoder().encode(user.getPassword()));
+//        user.setPassword(String.format("{bcrypt}%s",user.getPassword()));
+        Set<Role> role = new HashSet<>();
+        role.add(new Role(ERole.ROLE_USER));
+        user.setRoles(role);
         return userRepo.save(user);
     }
 
