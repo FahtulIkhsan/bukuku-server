@@ -4,6 +4,7 @@ import com.kelompok7.bukuku.user.role.ERole;
 import com.kelompok7.bukuku.user.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,12 +22,10 @@ import java.util.Set;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
+    @Autowired
     private final UserRepo userRepo;
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User saveUser(User user) {
         log.info("Saving new user {} to the database", user.getName());
-        user.setPassword(encoder().encode(user.getPassword()));
+        user.setPassword(encoder.encode(user.getPassword()));
 //        user.setPassword(String.format("{bcrypt}%s",user.getPassword()));
         Set<Role> role = new HashSet<>();
         role.add(new Role(ERole.ROLE_USER));

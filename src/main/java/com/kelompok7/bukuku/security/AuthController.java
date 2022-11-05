@@ -4,14 +4,15 @@ import com.kelompok7.bukuku.user.User;
 import com.kelompok7.bukuku.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
 @RestController
@@ -19,22 +20,28 @@ import java.net.URI;
 @Slf4j
 @RequiredArgsConstructor
 public class AuthController {
-    private final TokenService tokenService;
-    private final UserService userService;
+    @Autowired
+    private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        log.info("Line1");
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/auth/register").toUriString());
-        log.info("Line2");
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+    public ResponseEntity<User> register(@RequestBody User user) throws MessagingException, UnsupportedEncodingException {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("auth/register").toUriString());
+        return ResponseEntity.created(uri).body(authService.register(user));
     }
 
     @PostMapping("/login")
     public String token(Authentication authentication){
         log.info("Token requested for user: {}", authentication.getName());
-        String token = tokenService.generateToken(authentication);
+        String token = authService.generateToken(authentication);
         log.info("Token granted: {}", token);
         return token;
+    }
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        if (authService.verify(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
     }
 }

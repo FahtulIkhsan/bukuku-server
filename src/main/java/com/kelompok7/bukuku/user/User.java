@@ -50,6 +50,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Buku> buku;
+    @NotNull
+    private boolean isEnabled;
 
     @Override
     public Collection<SimpleGrantedAuthority> getAuthorities() {
@@ -77,6 +79,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isEnabled;
     }
 }
