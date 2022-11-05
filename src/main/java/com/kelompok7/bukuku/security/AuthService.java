@@ -9,6 +9,7 @@ import com.kelompok7.bukuku.security.verificationToken.VerificationTokenRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -41,8 +42,8 @@ public class AuthService {
     @Autowired
     private final JavaMailSender mailSender;
     private final JwtEncoder encoder;
-
-
+    @Autowired
+    private final ApplicationProperties applicationProperties;
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
@@ -72,11 +73,12 @@ public class AuthService {
         user.setRoles(role);
         user.setEnabled(false);
         userRepo.save(user);
-        sendVerificationEmail(user, "localhost:8081");
+        sendVerificationEmail(user);
         return user;
     }
 
-    public void sendVerificationEmail(User user, String siteURL) throws MessagingException, UnsupportedEncodingException{
+    public void sendVerificationEmail(User user) throws MessagingException, UnsupportedEncodingException{
+        String siteURL = String.format("localhost:%s", applicationProperties.getPort());
         String toAddress = user.getEmail();
         String fromAddress = "test.test.777555333@gmail.com";
         String senderName = "Bukuku";
