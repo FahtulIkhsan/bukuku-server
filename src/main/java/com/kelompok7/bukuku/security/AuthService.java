@@ -41,6 +41,7 @@ public class AuthService {
     private final VerificationTokenRepo verificationTokenRepo;
     @Autowired
     private final JavaMailSender mailSender;
+    @Autowired
     private final JwtEncoder encoder;
     @Autowired
     private final ApplicationProperties applicationProperties;
@@ -50,6 +51,7 @@ public class AuthService {
     }
 
     public String generateToken(Authentication authentication){
+        String userId = userRepo.findByUsername(authentication.getName()).getUserId().toString();
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -58,7 +60,7 @@ public class AuthService {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plus(2, ChronoUnit.HOURS))
-                .subject(authentication.getName())
+                .subject(userId)
                 .claim("scope", scope)
                 .build();
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

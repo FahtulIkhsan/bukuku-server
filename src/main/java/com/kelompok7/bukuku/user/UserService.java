@@ -1,9 +1,5 @@
 package com.kelompok7.bukuku.user;
 
-import org.springframework.core.codec.EncodingException;
-
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface UserService {
@@ -12,4 +8,6 @@ public interface UserService {
     User getUser(String username);
     void deleteUser(Long userId);
     List<User> getUser();
+
+    boolean isExist(Long userId);
 }

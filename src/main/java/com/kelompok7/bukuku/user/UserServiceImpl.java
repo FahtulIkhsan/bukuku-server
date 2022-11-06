@@ -5,7 +5,6 @@ import com.kelompok7.bukuku.user.role.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -74,5 +73,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUser() {
         log.info("Fetching all users");
         return userRepo.findAll();
+    }
+
+    @Override
+    public boolean isExist(Long userId) {
+        return userRepo.existsByUserId(userId);
     }
 }

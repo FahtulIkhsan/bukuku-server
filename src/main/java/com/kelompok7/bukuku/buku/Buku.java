@@ -1,10 +1,13 @@
 package com.kelompok7.bukuku.buku;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kelompok7.bukuku.buku.foto.Foto;
 import com.kelompok7.bukuku.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,8 +28,11 @@ public class Buku {
     private String pengarang;
     private String penerbit;
     private String sinopsis;
-    @OneToMany(mappedBy = "buku")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "buku", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Foto> foto;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

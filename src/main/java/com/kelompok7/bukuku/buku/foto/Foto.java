@@ -1,5 +1,6 @@
 package com.kelompok7.bukuku.buku.foto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kelompok7.bukuku.buku.Buku;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ import static javax.persistence.GenerationType.AUTO;
 public class Foto {
     @Id @GeneratedValue(strategy = AUTO)
     private Long fotoId;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "bookId")
     private Buku buku;
