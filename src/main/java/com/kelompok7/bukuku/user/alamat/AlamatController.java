@@ -46,10 +46,13 @@ public class AlamatController {
         return ResponseEntity.created(uri).body(alamatService.saveAlamat(userId, alamat));
     }
 
-    @DeleteMapping("/alamat/{id}")
-    public ResponseEntity<HttpStatus> deleteAlamat(@PathVariable Long id){
+    @DeleteMapping("/alamat/{alamatId}")
+    public ResponseEntity<HttpStatus> deleteAlamat(@PathVariable Long alamatId){
+        if(!alamatService.isExist(alamatId)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         try{
-            alamatService.deleteAlamat(id);
+            alamatService.deleteAlamat(alamatId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

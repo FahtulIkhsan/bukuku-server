@@ -54,6 +54,9 @@ public class BukuController {
     }
 
     public ResponseEntity<HttpStatus> deleteBuku(@PathVariable Long bukuId) {
+        if(!bukuService.isExist(bukuId)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         try{
             bukuService.deleteBuku(bukuId);
             return new ResponseEntity<>(HttpStatus.OK);

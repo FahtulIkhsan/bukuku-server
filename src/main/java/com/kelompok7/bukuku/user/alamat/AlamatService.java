@@ -7,5 +7,6 @@ public interface AlamatService {
     Alamat getAlamat(Long id);
     Set<Alamat> getAllAlamat(Long userId);
     void deleteAllAlamat(Long userId);
-    void deleteAlamat(Long id);
+    void deleteAlamat(Long alamatId);
+    boolean isExist(Long alamatId);
 }

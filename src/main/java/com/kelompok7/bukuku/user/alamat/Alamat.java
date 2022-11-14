@@ -16,7 +16,7 @@ import static javax.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 public class Alamat {
     @Id @GeneratedValue(strategy = AUTO)
-    private Long id;
+    private Long alamatId;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")

@@ -1,7 +1,6 @@
 package com.kelompok7.bukuku.security;
 
 import com.kelompok7.bukuku.user.User;
-import com.kelompok7.bukuku.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
@@ -43,5 +43,10 @@ public class AuthController {
         } else {
             return "verify_fail";
         }
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test(){
+        return ResponseEntity.ok("Server is running");
     }
 }

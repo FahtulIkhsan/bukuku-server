@@ -7,4 +7,5 @@ import java.util.List;
 public interface BukuRepo extends JpaRepository<Buku, Long> {
     Buku findByBukuId(Long bukuId);
     List<Buku> findByUserUserId(Long userId);
+    boolean existsByBukuId(Long bukuId);
 }

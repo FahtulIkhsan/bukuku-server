@@ -45,4 +45,9 @@ public class BukuServiceImpl implements BukuService{
         log.info("Fetching {}'s books", userId);
         return bukuRepo.findByUserUserId(userId);
     }
+
+    @Override
+    public boolean isExist(Long bukuId) {
+        return bukuRepo.existsByBukuId(bukuId);
+    }
 }

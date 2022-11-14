@@ -20,9 +20,8 @@ public class Foto {
     private Long fotoId;
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "bookId")
+    @JoinColumn(name = "bukuId")
     private Buku buku;
-    @NotNull
     @Column(unique = true)
     private String directory;
 }

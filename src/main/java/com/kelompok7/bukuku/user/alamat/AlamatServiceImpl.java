@@ -4,6 +4,7 @@ import com.kelompok7.bukuku.user.User;
 import com.kelompok7.bukuku.user.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +12,9 @@ import java.util.Set;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class AlamatServiceImpl implements AlamatService{
+    @Autowired
     private final UserRepo userRepo;
+    @Autowired
     private final AlamatRepo alamatRepo;
 
     @Override
@@ -43,8 +46,13 @@ public class AlamatServiceImpl implements AlamatService{
     }
 
     @Override
-    public void deleteAlamat(Long id) {
-        log.info("Deleting address {}", id);
-        alamatRepo.deleteById(id);
+    public void deleteAlamat(Long alamatId) {
+        log.info("Deleting address {}", alamatId);
+        alamatRepo.deleteById(alamatId);
+    }
+
+    @Override
+    public boolean isExist(Long alamatId) {
+        return alamatRepo.existsByAlamatId(alamatId);
     }
 }
