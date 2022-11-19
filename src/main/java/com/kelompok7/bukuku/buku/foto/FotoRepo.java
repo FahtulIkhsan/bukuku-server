@@ -10,5 +10,4 @@ public interface FotoRepo extends JpaRepository<Foto, Long> {
     Optional<Foto> findByFotoId(Long fotoId);
     @Query("SELECT f.fotoId FROM Foto f JOIN f.buku b WHERE b.bukuId = ?1")
     List<Long> findByBukuBukuId(Long bukuId);
-    boolean existsByFotoId(Long fotoId);
 }

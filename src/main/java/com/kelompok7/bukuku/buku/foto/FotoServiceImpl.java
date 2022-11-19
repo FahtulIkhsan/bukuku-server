@@ -88,6 +88,6 @@ public class FotoServiceImpl implements FotoService{
 
     @Override
     public boolean isExist(Long fotoId) {
-        return fotoRepo.existsByFotoId(fotoId);
+        return fotoRepo.existsById(fotoId);
     }
 }

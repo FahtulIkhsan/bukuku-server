@@ -48,6 +48,6 @@ public class BukuServiceImpl implements BukuService{
 
     @Override
     public boolean isExist(Long bukuId) {
-        return bukuRepo.existsByBukuId(bukuId);
+        return bukuRepo.existsById(bukuId);
     }
 }

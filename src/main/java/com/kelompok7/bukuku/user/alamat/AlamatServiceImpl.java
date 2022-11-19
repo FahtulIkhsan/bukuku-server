@@ -28,20 +28,20 @@ public class AlamatServiceImpl implements AlamatService{
     }
 
     @Override
-    public Alamat getAlamat(Long id) {
-        log.info("Fetching address {}", id);
-        return alamatRepo.findById(id).get();
+    public Alamat getAlamat(Long alamatId) {
+        log.info("Fetching address {}", alamatId);
+        return alamatRepo.findById(alamatId).get();
     }
 
     @Override
     public Set<Alamat> getAllAlamat(Long userId) {
-        log.info("Fetching user {}", userId);
+        log.info("Fetching user {}'s address", userId);
         return alamatRepo.findByUserUserId(userId);
     }
 
     @Override
     public void deleteAllAlamat(Long userId) {
-        log.info("Deleting address {}", userId);
+        log.info("Deleting user {}'s addresses", userId);
         alamatRepo.deleteByUserUserId(userId);
     }
 
@@ -53,6 +53,6 @@ public class AlamatServiceImpl implements AlamatService{
 
     @Override
     public boolean isExist(Long alamatId) {
-        return alamatRepo.existsByAlamatId(alamatId);
+        return alamatRepo.existsById(alamatId);
     }
 }

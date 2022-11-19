@@ -4,7 +4,7 @@ import java.util.Set;
 
 public interface AlamatService {
     Set<Alamat> saveAlamat(Long userId, Alamat alamat);
-    Alamat getAlamat(Long id);
+    Alamat getAlamat(Long alamatId);
     Set<Alamat> getAllAlamat(Long userId);
     void deleteAllAlamat(Long userId);
     void deleteAlamat(Long alamatId);

@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 public class NomorTelepon {
     @Id
-    private Long id;
+    private Long teleponId;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")

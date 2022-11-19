@@ -2,6 +2,7 @@ package com.kelompok7.bukuku.user.alamat;
 
 import com.kelompok7.bukuku.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,9 @@ import java.util.Set;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class AlamatController {
+    @Autowired
     private final UserService userService;
+    @Autowired
     private final AlamatService alamatService;
 
     @GetMapping("/alamat/{id}")
@@ -31,9 +34,8 @@ public class AlamatController {
 
     @GetMapping("/{userId}/alamat")
     public ResponseEntity<Set<Alamat>> getUserAddress(@PathVariable Long userId){
-        Optional<Set<Alamat>> alamat = Optional.ofNullable(alamatService.getAllAlamat(userId));
-
-        if(alamat.isPresent()){
+        if(userService.isExist(userId)){
+            Optional<Set<Alamat>> alamat = Optional.ofNullable(alamatService.getAllAlamat(userId));
             return new ResponseEntity<>(alamat.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

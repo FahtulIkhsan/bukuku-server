@@ -77,6 +77,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public boolean isExist(Long userId) {
-        return userRepo.existsByUserId(userId);
+        return userRepo.existsById(userId);
     }
 }
