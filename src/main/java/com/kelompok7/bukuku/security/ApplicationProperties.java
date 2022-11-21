@@ -18,6 +18,6 @@ public class ApplicationProperties {
     @Autowired
     public ApplicationProperties(@Value("${server.port:8080}") String propPort){
         this.port = propPort;
-        this.address = "103.31.39.143";
+        this.address = "bejobarokah.my.id";
     }
 }
