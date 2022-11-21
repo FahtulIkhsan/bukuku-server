@@ -26,7 +26,7 @@ public class NomorTeleponServiceImpl implements NomorTeleponService{
         User user = userRepo.findByUserId(userId);
         nomorTelepon.setUser(user);
         user.getNomorTelepon().add(nomorTelepon);
-        userRepo.save(user);
+        userRepo.saveAndFlush(user);
         return nomorTeleponRepo.findByUserUserId(userId);
     }
 

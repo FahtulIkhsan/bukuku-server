@@ -80,7 +80,7 @@ public class AuthService {
     }
 
     public void sendVerificationEmail(User user) throws MessagingException, UnsupportedEncodingException{
-        String siteURL = String.format("localhost:%s", applicationProperties.getPort());
+        String siteURL = String.format("https://%s:%s", applicationProperties.getAddress(), applicationProperties.getPort());
         String toAddress = user.getEmail();
         String fromAddress = "test.test.777555333@gmail.com";
         String senderName = "Bukuku";

@@ -13,9 +13,11 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class ApplicationProperties {
     private String port;
+    private String address;
 
     @Autowired
     public ApplicationProperties(@Value("${server.port:8080}") String propPort){
         this.port = propPort;
+        this.address = "103.31.39.143";
     }
 }

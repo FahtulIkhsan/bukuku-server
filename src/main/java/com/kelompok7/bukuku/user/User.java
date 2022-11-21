@@ -46,7 +46,7 @@ public class User implements UserDetails {
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Set<NomorTelepon> nomorTelepon;
+    private Set<NomorTelepon> nomorTelepon = new HashSet<>();
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
