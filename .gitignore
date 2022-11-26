@@ -1,6 +1,6 @@
 *.p12
 *.pem
-.application.properties
+./src/main/resources/application.properties
 
 HELP.md
 .gradle
