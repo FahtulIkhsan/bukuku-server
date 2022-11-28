@@ -1,6 +1,7 @@
 package com.kelompok7.bukuku.buku.foto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kelompok7.bukuku.buku.Buku;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Foto {
     @ManyToOne
     @JoinColumn(name = "bukuId")
     private Buku buku;
+    @JsonIgnore
     @Column(unique = true)
     private String directory;
 }

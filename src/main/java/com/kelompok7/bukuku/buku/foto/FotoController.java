@@ -25,7 +25,7 @@ public class FotoController {
     @Autowired
     private final FotoService fotoService;
 
-    @PostMapping("/foto/{bukuId}")
+    @PostMapping("/{bukuId}/foto")
     public ResponseEntity<Foto> saveFoto(@PathVariable Long bukuId, @RequestParam("foto")MultipartFile foto)
             throws IOException{
         if(!Objects.equals(foto.getContentType(), "image/png")){
@@ -43,7 +43,7 @@ public class FotoController {
         }
     }
 
-    @GetMapping("foto/{fotoId}")
+    @GetMapping("/foto/{fotoId}")
     public ResponseEntity<byte[]> getFoto(@PathVariable Long fotoId){
         try {
             Optional<byte []> foto = Optional.ofNullable(fotoService.getFoto(fotoId));
@@ -56,7 +56,7 @@ public class FotoController {
         }
     }
 
-    @DeleteMapping("foto/{fotoId}")
+    @DeleteMapping("/foto/{fotoId}")
     public ResponseEntity<HttpStatus> deleteFoto(@PathVariable Long fotoId){
         if(!fotoService.isExist(fotoId)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

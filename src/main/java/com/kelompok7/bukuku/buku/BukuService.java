@@ -3,7 +3,7 @@ package com.kelompok7.bukuku.buku;
 import java.util.List;
 
 public interface BukuService {
-    Buku saveBuku(Buku buku);
+    List<Buku> saveBuku(Long userId, Buku buku);
     Buku getBuku(Long bukuId);
     void deleteBuku(Long bukuId);
     List<Buku> getBuku();

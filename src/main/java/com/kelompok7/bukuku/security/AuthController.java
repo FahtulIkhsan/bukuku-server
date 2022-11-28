@@ -50,6 +50,7 @@ public class AuthController {
         log.info("Token requested for user: {}", authentication.getName());
         String token = authService.generateToken(authentication);
         map.put("token", token);
+        map.put("userId", user.get().getUserId().toString());
         log.info("Token granted: {}", token);
         return ResponseEntity.ok(map);
     }

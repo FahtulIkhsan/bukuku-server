@@ -1,5 +1,7 @@
 package com.kelompok7.bukuku.buku;
 
+import com.kelompok7.bukuku.user.User;
+import com.kelompok7.bukuku.user.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,18 @@ import java.util.List;
 @Slf4j
 public class BukuServiceImpl implements BukuService{
     @Autowired
+    private final UserRepo userRepo;
+    @Autowired
     private final BukuRepo bukuRepo;
 
     @Override
-    public Buku saveBuku(Buku buku) {
+    public List<Buku> saveBuku(Long userId, Buku buku) {
         log.info("Saving new book {} to the database", buku.getJudul());
-        return bukuRepo.save(buku);
+        User user = userRepo.findByUserId(userId);
+        buku.setUser(user);
+        user.getBuku().add(buku);
+        userRepo.saveAndFlush(user);
+        return bukuRepo.findByUserUserId(userId);
     }
 
     @Override

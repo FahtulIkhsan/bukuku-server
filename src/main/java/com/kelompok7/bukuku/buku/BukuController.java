@@ -1,5 +1,6 @@
 package com.kelompok7.bukuku.buku;
 
+import com.kelompok7.bukuku.user.User;
 import com.kelompok7.bukuku.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class BukuController {
         return ResponseEntity.ok().body(bukuService.getBuku());
     }
 
-    @GetMapping("/{bookId}")
+    @GetMapping("/{bukuId}")
     public ResponseEntity<Buku> getBuku(@PathVariable Long bukuId) {
         Optional<Buku> buku = Optional.ofNullable(bukuService.getBuku(bukuId));
 
@@ -37,7 +38,7 @@ public class BukuController {
         }
     }
 
-    @GetMapping("user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<Buku>> getBukuUser(@PathVariable Long userId) {
         boolean exist = userService.isExist(userId);
         if(!exist){
@@ -47,10 +48,14 @@ public class BukuController {
         return new ResponseEntity<>(listBuku, HttpStatus.OK);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Buku> saveBuku(@RequestBody Buku buku) {
+    @PostMapping("/user/{userId}/save")
+    public ResponseEntity<List<Buku>> saveBuku(@PathVariable Long userId, @RequestBody Buku buku) {
+        Optional<User> user = Optional.ofNullable(userService.getUser(userId));
+        if(user.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("buku/save").toUriString());
-        return ResponseEntity.created(uri).body(bukuService.saveBuku(buku));
+        return ResponseEntity.created(uri).body(bukuService.saveBuku(userId, buku));
     }
 
     public ResponseEntity<HttpStatus> deleteBuku(@PathVariable Long bukuId) {

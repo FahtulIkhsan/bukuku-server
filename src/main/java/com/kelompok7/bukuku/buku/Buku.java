@@ -32,6 +32,7 @@ public class Buku {
     @OneToMany(mappedBy = "buku", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Foto> foto;
+    @NotNull
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")
