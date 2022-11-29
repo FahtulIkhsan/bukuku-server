@@ -27,6 +27,7 @@ public class User implements UserDetails {
     @NotNull
     @Column(unique = true)
     private String email;
+    @JsonIgnore
     @NotNull
     private String password;
     @ManyToMany(fetch = FetchType.LAZY,
